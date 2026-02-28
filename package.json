@@ -12,7 +12,6 @@
     "dev:api": "npm run dev --workspace apps/api",
     "dev:web": "npm run dev --workspace apps/web",
     "scrape": "npm run scrape --workspace apps/scraper",
-    "scrape:cdp": "CDP_URL=http://127.0.0.1:9222 npm run scrape --workspace apps/scraper",
     "chrome:playwright-profile": "bash ./scripts/open-playwright-chrome.sh",
     "build": "npm run build --workspace apps/api && npm run build --workspace apps/scraper && npm run build --workspace apps/web"
   },

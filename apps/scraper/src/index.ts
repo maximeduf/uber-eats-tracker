@@ -8,7 +8,6 @@ const __dirname = path.dirname(__filename);
 
 const apiBaseUrl = process.env.API_BASE_URL ?? 'http://localhost:3000';
 const userDataDir = process.env.PLAYWRIGHT_USER_DATA_DIR ?? path.resolve(__dirname, '../.pw-user-data');
-const cdpUrl = process.env.CDP_URL;
 const debugScraper = (process.env.DEBUG_SCRAPER ?? '1') !== '0';
 
 const pageUrl = 'https://myprivacy.uber.com/exploreyourdata/orders';
@@ -32,9 +31,6 @@ async function run(): Promise<void> {
 
   try {
     console.log(`Using API: ${apiBaseUrl}`);
-    if (cdpUrl) {
-      console.log(`Connected over CDP: ${cdpUrl}`);
-    }
 
     await page.goto(pageUrl, { waitUntil: 'domcontentloaded' });
     await waitForOrdersTableReady(page);
@@ -70,17 +66,6 @@ async function run(): Promise<void> {
 }
 
 async function createContextAndPage(): Promise<{ browserContext: BrowserContext; page: Page; shouldCloseContext: boolean }> {
-  if (cdpUrl) {
-    const browser = await chromium.connectOverCDP(cdpUrl);
-    const context = browser.contexts()[0] ?? (await browser.newContext());
-    const page = context.pages()[0] ?? (await context.newPage());
-    return {
-      browserContext: context,
-      page,
-      shouldCloseContext: false
-    };
-  }
-
   const context = await chromium.launchPersistentContext(userDataDir, {
     headless: false,
     channel: 'chrome',
