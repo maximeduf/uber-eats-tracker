@@ -1,0 +1,25 @@
+{
+  "name": "uber-eats-tracker",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Track Uber Eats historical expenses with Playwright, Express, SQLite, and Vue.",
+  "workspaces": [
+    "apps/api",
+    "apps/scraper",
+    "apps/web"
+  ],
+  "scripts": {
+    "dev:api": "npm run dev --workspace apps/api",
+    "dev:web": "npm run dev --workspace apps/web",
+    "scrape": "npm run scrape --workspace apps/scraper",
+    "scrape:cdp": "CDP_URL=http://127.0.0.1:9222 npm run scrape --workspace apps/scraper",
+    "chrome:playwright-profile": "bash ./scripts/open-playwright-chrome.sh",
+    "build": "npm run build --workspace apps/api && npm run build --workspace apps/scraper && npm run build --workspace apps/web"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
